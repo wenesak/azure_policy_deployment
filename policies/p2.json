@@ -1,0 +1,32 @@
+{
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "p2",
+    "apiVersion": "2019-06-01",
+    "properties": {
+      "displayName": "TG-RG-CostCentre",
+      "policyType": "Custom",
+      "mode": "All",
+      "description": "This policy enables the restriction of resource group tag \"CostCentre\" to have \"V_\" as prefix. e.g. \"V_ESG\". All case insensitive.",
+      "metadata": {
+        "catagory": "Tags"
+      },
+      "parameters": {},
+      "policyRule": {
+        "if": {
+          "allof": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+            },
+            {
+              "value": "[toUpper(field('tags.CostCentre'))]",
+              "notLike": "V_*"
+            }
+          ]
+        },
+        "then": {
+          "effect": "deny"
+        }
+      }
+    }
+  }

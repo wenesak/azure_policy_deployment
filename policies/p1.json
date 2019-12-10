@@ -1,0 +1,35 @@
+{
+    "name": "p1",
+    "type": "Microsoft.Authorization/policySetDefinitions",
+    "properties": {
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "category": "Network"
+          },
+        "parameters": {
+            "allowedLocations": {
+                "type": "Array",
+                "metadata": {
+                    "description": "The list of locations that can be specified when deploying resources",
+                    "strongType": "location",
+                    "displayName": "Allowed locations"
+                },
+                "defaultValue": [ "westus2" ]
+            }
+        },
+        "displayName": "p1-Allowed locations",
+        "description": "This policy enables you to restrict the locations your organization can specify when deploying resources.",
+        "policyRule": {
+            "if": {
+                "not": {
+                    "field": "location",
+                    "in": "[parameters('allowedLocations')]"
+                }
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}
